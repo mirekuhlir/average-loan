@@ -84,7 +84,7 @@ class App extends Component {
 						{filteredLoans.length > 0 ? (
 							<div>
 								Při úroku {` ${ratings[this.state.rating]}`} je průměrná výše
-								půjček {` ${Math.floor(averageLoan)} Kč.`}
+								půjček {` ${Number(averageLoan).toFixed(2)} Kč.`}
 							</div>
 						) : (
 							<div>
