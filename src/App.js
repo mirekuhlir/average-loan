@@ -21,8 +21,7 @@ class App extends Component {
 	state = {
 		rating: 'AAAAAA',
 		loans: [],
-		isLoading: true,
-		selectedButtonIndex: 0
+		isLoading: true
 	};
 
 	async componentDidMount() {
@@ -58,8 +57,8 @@ class App extends Component {
 				<div
 					key={rating}
 					className={`button-rating ${buttonSelectedClassName}`}
-					onClick={index => {
-						this.setState({ rating: rating, selectedButtonIndex: index });
+					onClick={() => {
+						this.setState({ rating: rating });
 					}}
 				>
 					{`${ratings[rating]}`}
