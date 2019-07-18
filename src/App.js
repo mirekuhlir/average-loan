@@ -74,7 +74,7 @@ class App extends Component {
 				{isLoading ? (
 					<div>
 						<div className="loading">
-							<p>Načítání</p>
+							<p>Načítání...</p>
 						</div>
 					</div>
 				) : (
@@ -83,7 +83,11 @@ class App extends Component {
 						{filteredLoans.length > 0 ? (
 							<div>
 								Při úroku {` ${ratings[this.state.rating]}`} je průměrná výše
-								půjček {` ${Number(averageLoan).toFixed(2)} Kč.`}
+								půjček{' '}
+								{` ${averageLoan
+									.toFixed(2)
+									.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} Kč.`}
 							</div>
 						) : (
 							<div>
