@@ -19,7 +19,7 @@ const ratings = {
 
 class App extends Component {
 	state = {
-		rating: 'AAAAA',
+		rating: 'AAAAAA',
 		loans: [],
 		isLoading: true,
 		selectedButtonIndex: 0
