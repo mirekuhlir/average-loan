@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import './App.css';
 
 const ratings = {
@@ -19,7 +18,7 @@ const ratings = {
 
 class App extends Component {
 	state = {
-		rating: 'AAAAAA',
+		selectedRating: '',
 		loans: [],
 		isLoading: true
 	};
@@ -39,29 +38,27 @@ class App extends Component {
 	}
 
 	render() {
-		const { isLoading } = this.state;
+		const { isLoading, loans, selectedRating } = this.state;
 
-		let filteredLoans = this.state.loans.filter(
-			loan => loan.rating === this.state.rating
-		);
+		const filteredLoans = loans.filter(loan => loan.rating === selectedRating);
+		const sumLoans = filteredLoans.reduce((acc, loan) => acc + loan.amount, 0);
+		const averageLoan = sumLoans / filteredLoans.length;
 
-		let sumLoans = filteredLoans.reduce((acc, loan) => acc + loan.amount, 0);
-		let averageLoan = sumLoans / filteredLoans.length;
-
-		const ratingsButtons = Object.keys(ratings).map(rating => {
+		const ratingsButtons = Object.keys(ratings).map(ratingItem => {
 			let buttonSelectedClassName = '';
-			if (this.state.rating === rating) {
+			if (ratingItem === selectedRating) {
 				buttonSelectedClassName = 'button-rating-selected';
 			}
+
 			return (
 				<div
-					key={rating}
+					key={ratingItem}
 					className={`button-rating ${buttonSelectedClassName}`}
 					onClick={() => {
-						this.setState({ rating: rating });
+						this.setState({ selectedRating: ratingItem });
 					}}
 				>
-					{`${ratings[rating]}`}
+					{`${ratings[ratingItem]}`}
 				</div>
 			);
 		});
@@ -82,14 +79,14 @@ class App extends Component {
 						<div className="button-rating-list">{ratingsButtons}</div>
 						{filteredLoans.length > 0 ? (
 							<div>
-								Při úroku {` ${ratings[this.state.rating]}`} je průměrná výše
-								půjček{' '}
+								Při úroku {` ${ratings[selectedRating]}`} je průměrná výše
+								půjček
 								{` ${averageLoan
 									.toFixed(2)
 									.toString()
 									.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} Kč.`}
 							</div>
-						) : (
+						) : selectedRating === '' ? null : (
 							<div>
 								Půjčky s touto úrokovou sazbou nejsou k dispozici. Vyberte jinou
 								sazbu.
